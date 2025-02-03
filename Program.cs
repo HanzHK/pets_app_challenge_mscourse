@@ -132,6 +132,8 @@ internal class AnimalsArray
 internal class Menu
 {
     AnimalsArray animalsArray = new AnimalsArray();
+    Search search = new Search();
+
     string menuSelection = "";
     string? readResult;
 
@@ -178,6 +180,8 @@ internal class Menu
                 case "2":
                     // Display all dogs with a specified characteristic
                     Console.WriteLine("\nUNDER CONSTRUCTION - please check back next month to see progress.");
+                    search.FindSpecies("dog");
+                    search.FindSpecies("cat");
                     Console.WriteLine("Press the Enter key to continue.");
                     readResult = Console.ReadLine();
                     break;
@@ -188,4 +192,26 @@ internal class Menu
 
         } while (menuSelection != "exit");
     }
+}
+internal class Search
+{
+    
+
+    public void FindSpecies(string animal)
+    {
+        for (int i = 0; i < Settings.MaxPets; i++)
+        {
+            if (!string.IsNullOrEmpty(AnimalsArray.OurAnimals[i, 1]) && AnimalsArray.OurAnimals[i, 1].Contains(animal))
+            {
+
+                Console.WriteLine("\n*** Animal Found ***");
+                for (int j = 0; j < Settings.PocetVlastnostiZvirete; j++)
+                {
+                    Console.WriteLine(AnimalsArray.OurAnimals[i, j]);
+                }
+            }
+        }
+    }
+
+
 }
