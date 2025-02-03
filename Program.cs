@@ -10,23 +10,53 @@ internal class Program
         // Nastavení kultury na en-us
         CultureInfo.CurrentCulture = new CultureInfo("en-US");
 
+        // Vytvoření instance a volání metody na zobrazení menu
+        Menu menu = new Menu();
+        menu.ZobrazMenu();
+
+    }
+}
+internal static class Settings
+{
+    private static int maxPets = 8;
+    private static int pocetVlastnostiZvirete = 7;
+
+    public static int MaxPets
+    {
+        get { return maxPets; }
+        set { maxPets = value > 0 ? value : maxPets; } // Změna jen pokud je hodnota > 0
+    }
+
+    public static int PocetVlastnostiZvirete
+    {
+        get { return pocetVlastnostiZvirete; }
+        set { pocetVlastnostiZvirete = value > 0 ? value : pocetVlastnostiZvirete; }
+    }
+}
+internal class AnimalsArray
+{
+    public static string[,] OurAnimals = new string[Settings.MaxPets, Settings.PocetVlastnostiZvirete];
+
+    // Konstruktor třídy ve kterém voláme metodu pro naplnění pole existujícími daty
+    public AnimalsArray()
+    {
+        FillTheArray();
+    }
 
 
-        // #1 the ourAnimals array will store the following: 
-        string animalSpecies = "";
-        string animalID = "";
-        string animalAge = "";
-        string animalPhysicalDescription = "";
-        string animalPersonalityDescription = "";
-        string animalNickname = "";
-        string suggestedDonation = ""; //tohle jsem přidal
-        decimal decimalDonation = 0.00m;
+    // deklarace proměnných
+    string animalSpecies = "";
+    string animalID = "";
+    string animalAge = "";
+    string animalPhysicalDescription = "";
+    string animalPersonalityDescription = "";
+    string animalNickname = "";
+    string suggestedDonation = "";
+    decimal decimalDonation = 0.00m;
 
-        // #3 array used to store runtime data, there is no persisted data
-
-
-        // #4 create sample data ourAnimals array entries
-
+    // Tahle metoda slouží k naplnění seznamu mazlíčků existujícími daty
+    public void FillTheArray()
+    {
         for (int i = 0; i < Settings.MaxPets; i++)
         {
             switch (i)
@@ -39,7 +69,6 @@ internal class Program
                     animalPersonalityDescription = "loves to have her belly rubbed and likes to chase her tail. gives lots of kisses.";
                     animalNickname = "lola";
                     suggestedDonation = "85.00";
-                    // Ve všech entries musím přidat suggested donation
                     break;
 
                 case 1:
@@ -84,13 +113,13 @@ internal class Program
 
 
             // Tady nastavuju sloupce v array
-            AnimalStorage.OurAnimals[i, 0] = "ID #: " + animalID;
-            AnimalStorage.OurAnimals[i, 1] = "Species: " + animalSpecies;
-            AnimalStorage.OurAnimals[i, 2] = "Age: " + animalAge;
-            AnimalStorage.OurAnimals[i, 3] = "Nickname: " + animalNickname;
-            AnimalStorage.OurAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
-            AnimalStorage.OurAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
-            AnimalStorage.OurAnimals[i, 6] = $"Suggested Donation: {decimalDonation:C2}";
+            OurAnimals[i, 0] = "ID #: " + animalID;
+            OurAnimals[i, 1] = "Species: " + animalSpecies;
+            OurAnimals[i, 2] = "Age: " + animalAge;
+            OurAnimals[i, 3] = "Nickname: " + animalNickname;
+            OurAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
+            OurAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
+            OurAnimals[i, 6] = $"Suggested Donation: {decimalDonation:C2}";
 
 
             if (!decimal.TryParse(suggestedDonation, out decimalDonation))
@@ -98,38 +127,11 @@ internal class Program
                 decimalDonation = 45.00m; // if suggestedDonation NOT a number, default to 45.00
             }
         }
-
-
-        // #5 display the top-level menu options
-        Menu menu = new Menu();
-        menu.ZobrazMenu();
-
     }
-}
-internal static class Settings
-{
-    private static int maxPets = 8;
-    private static int pocetVlastnostiZvirete = 7;
-
-    public static int MaxPets
-    {
-        get { return maxPets; }
-        set { maxPets = value > 0 ? value : maxPets; } // Změna jen pokud je hodnota > 0
-    }
-
-    public static int PocetVlastnostiZvirete
-    {
-        get { return pocetVlastnostiZvirete; }
-        set { pocetVlastnostiZvirete = value > 0 ? value : pocetVlastnostiZvirete; }
-    }
-}
-internal static class AnimalStorage
-{
-    public static string[,] OurAnimals = new string[Settings.MaxPets, Settings.PocetVlastnostiZvirete];
 }
 internal class Menu
 {
-
+    AnimalsArray animalsArray = new AnimalsArray();
     string menuSelection = "";
     string? readResult;
 
@@ -159,12 +161,12 @@ internal class Menu
                     // list all pet info
                     for (int i = 0; i < Settings.MaxPets; i++)
                     {
-                        if (AnimalStorage.OurAnimals[i, 0] != "ID #: ")
+                        if (AnimalsArray.OurAnimals[i, 0] != "ID #: ")
                         {
                             Console.WriteLine();
                             for (int j = 0; j < Settings.PocetVlastnostiZvirete; j++)
                             {
-                                Console.WriteLine(AnimalStorage.OurAnimals[i, j]);
+                                Console.WriteLine(AnimalsArray.OurAnimals[i, j]);
                             }
                         }
                     }
