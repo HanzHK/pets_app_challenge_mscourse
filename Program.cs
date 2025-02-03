@@ -146,7 +146,7 @@ internal class Menu
 
             Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
             Console.WriteLine(" 1. List all of our current pet information");
-            Console.WriteLine(" 2. Display all dogs with a specified characteristic");
+            Console.WriteLine(" 2. Filter by species - cats/dogs");
             Console.WriteLine();
             Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
@@ -180,8 +180,23 @@ internal class Menu
                 case "2":
                     // Display all dogs with a specified characteristic
                     Console.WriteLine("\nUNDER CONSTRUCTION - please check back next month to see progress.");
-                    search.FindSpecies("dog");
-                    search.FindSpecies("cat");
+                    Console.WriteLine("Type the number to choose from cats(1) or dogs(2)");
+                    Console.WriteLine("1. Cats");
+                    Console.WriteLine("2. Dogs");
+                    string filterWho = Console.ReadLine();
+                    switch (filterWho)
+                    {
+                        case "1":
+                            search.FindSpecies("cat");
+                            break;
+                        case "2":
+                            search.FindSpecies("dog");
+                            break;
+                        default:
+                            Console.WriteLine("Error");
+                            break;
+                    }
+
                     Console.WriteLine("Press the Enter key to continue.");
                     readResult = Console.ReadLine();
                     break;
