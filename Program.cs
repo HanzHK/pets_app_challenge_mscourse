@@ -147,7 +147,8 @@ internal class Menu
             Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
             Console.WriteLine(" 1. List all of our current pet information");
             Console.WriteLine(" 2. Filter by species - cats/dogs");
-            Console.WriteLine();
+            Console.WriteLine(" 3. Search by keyword");
+
             Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
             readResult = Console.ReadLine();
@@ -178,7 +179,7 @@ internal class Menu
                     break;
 
                 case "2":
-                    // Display all dogs with a specified characteristic
+                    // Display specified animal species
                     Console.WriteLine("\nUNDER CONSTRUCTION - please check back next month to see progress.");
                     Console.WriteLine("Type the number to choose from cats(1) or dogs(2)");
                     Console.WriteLine("1. Cats");
@@ -200,6 +201,9 @@ internal class Menu
                     Console.WriteLine("Press the Enter key to continue.");
                     readResult = Console.ReadLine();
                     break;
+                case "3":
+                    search.KeyWordSearch();
+                    break;
 
                 default:
                     break;
@@ -210,7 +214,19 @@ internal class Menu
 }
 internal class Search
 {
-    
+    public void KeyWordSearch()
+    {
+        Console.WriteLine("Zadejte hledané výrazy: ");
+        string searchTerms = Console.ReadLine();
+        string[] termsArray = searchTerms.Split(" ");
+
+        if (termsArray.Contains("test"))
+        {
+            Console.WriteLine("Test");
+            Console.ReadLine();
+        }
+        
+    }
 
     public void FindSpecies(string animal)
     {
